@@ -3,44 +3,72 @@ package ua.opnu;
 
 public class TimeSpan {
 
-    // TODO: add class fields
+    int hours;
+    int minutes;
 
     TimeSpan(int hours, int minutes) {
-        // TODO: write constructor body
+        if (hours >= 0 && minutes >= 0 && minutes <= 59) {
+            this.hours = hours;
+            this.minutes = minutes;
+        }
     }
 
     int getHours() {
-        return 0;
+        return this.hours;
     }
 
     int getMinutes() {
-        // TODO: write method body
-        return 0;
+        return this.minutes;
     }
 
     void add(int hours, int minutes) {
-        // TODO: write method body
+        if (hours >= 0 && minutes >= 0 && minutes <= 59) {
+            this.hours += hours;
+            this.minutes += minutes;
+            if (this.minutes >= 60) {
+                this.minutes -= 60;
+                this.hours++;
+            }
+        }
     }
 
     void addTimeSpan(TimeSpan timespan) {
-        // TODO: write method body
+        this.hours += timespan.getHours();
+        this.minutes += timespan.getMinutes();
+        if (this.minutes >= 60) {
+            this.minutes -= 60;
+            this.hours++;
+        }
     }
 
     double getTotalHours() {
-        // TODO: write method body
-        return 0;
+        return this.hours + (double) (this.minutes) / 60;
     }
 
     int getTotalMinutes() {
-        // TODO: write method body
-        return 0;
+        return this.hours * 60 + this.minutes;
     }
 
     void subtract(TimeSpan span) {
-        // TODO: write method body
+        int totalMinutesCurrent = this.getTotalMinutes();
+        int totalMinutesSubtract = span.getTotalMinutes();
+
+        if (totalMinutesSubtract > totalMinutesCurrent) {
+            throw new IllegalArgumentException("Cannot subtract a larger timespan from a smaller one");
+        }
+
+        int resultMinutes = totalMinutesCurrent - totalMinutesSubtract;
+        this.hours = resultMinutes / 60;
+        this.minutes = resultMinutes % 60;
     }
 
     void scale(int factor) {
-        // TODO: write method body
+        if (factor <= 0) {
+            throw new IllegalArgumentException("Scale factor must be greater than zero");
+        }
+
+        int totalMinutes = this.getTotalMinutes() * factor;
+        this.hours = totalMinutes / 60;
+        this.minutes = totalMinutes % 60;
     }
 }
