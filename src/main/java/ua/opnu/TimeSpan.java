@@ -54,7 +54,7 @@ public class TimeSpan {
         int totalMinutesSubtract = span.getTotalMinutes();
 
         if (totalMinutesSubtract > totalMinutesCurrent) {
-            throw new IllegalArgumentException("Cannot subtract a larger timespan from a smaller one");
+            return;
         }
 
         int resultMinutes = totalMinutesCurrent - totalMinutesSubtract;
@@ -64,7 +64,7 @@ public class TimeSpan {
 
     void scale(int factor) {
         if (factor <= 0) {
-            throw new IllegalArgumentException("Scale factor must be greater than zero");
+            return;
         }
 
         int totalMinutes = this.getTotalMinutes() * factor;
